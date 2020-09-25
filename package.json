@@ -1,0 +1,34 @@
+{
+  "name": "homebridge-apc-home",
+  "version": "0.1",
+  "description": "Homebridge plugin for APC Home",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ttimpe/homebridge-apc-home.git"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "apc"
+  ],
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.4.46"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "homebridge": "^1.1.0",
+    "typescript": "^3.9.5",
+    "ts-node": "^8.10.2"
+  },
+  "author": "Tobias Timpe <tobias@tim.pe>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ttimpe/homebridge-apc-home/issues"
+  },
+  "homepage": "https://github.com/ttimpe/homebridge-apc-home"
+}
