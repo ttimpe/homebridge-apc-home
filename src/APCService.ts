@@ -23,8 +23,8 @@ export default class APCService {
 				"email": email,
 				"password": password,
 				"application": {
-					"app_id": "alya-api-browser-id",
-					"app_secret": "alya-api-browser-2tFsUL41FELUlyfrSMEZ4kNKwJg"
+					"app_id": this.app_id,
+					"app_secret": this.app_secret
 				}
 			}
 		}
