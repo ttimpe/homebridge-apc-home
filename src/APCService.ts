@@ -16,7 +16,7 @@ export default class APCService {
 	}
 
 	async loginUser(email: string, password: string) {
-		const url = 'https://user-field.aylantworks.com/users/sign_in.json'
+		const url = 'https://user-field.aylanetworks.com/users/sign_in.json'
 
 		const loginObject = {
 			"user": {
