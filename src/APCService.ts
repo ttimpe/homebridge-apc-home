@@ -5,8 +5,8 @@ import APCOutlet from './APCOutlet'
 
 export default class APCService {
 	private client: any
-	private app_id: string = 'alya-api-browser-id'
-	private app_secret: string = 'alya-api-browser-2tFsUL41FELUlyfrSMEZ4kNKwJg'
+	private app_id: string = 'schneider-5w-id'
+	private app_secret: string = 'schneider-4p5If6sO_QS9F0mQLJmOoCxswng'
 
 	private access_token: string = ''
 	private refresh_token: string = ''
