@@ -43,8 +43,7 @@ export default class APCHomeAccessory {
 
 		this.Characteristic = this.platform.api.hap.Characteristic
 
-		this.device = device
-
+		this.log.info("Init device ", device)
 
 		this.accessory.getService(this.platform.Service.AccessoryInformation)!
 		.setCharacteristic(this.platform.Characteristic.Manufacturer, 'APC')

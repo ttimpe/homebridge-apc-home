@@ -49,10 +49,12 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
   }
 
   async didFinishLaunching() {
+    this.log.info("APCHome initialized")
     this.apcService = new APCService()
     if (this.config.email && this.config.password) {
       let email = this.config.email.toString()
       let password = this.config.password.toString()
+      this.log.info("Logging in user")
        await this.apcService.loginUser(email, password)
        let apcDevices: APCDevice[] = await this.apcService.getDevices()
       // Now make platform accessories out of those devices, check if they already exist, etc.
@@ -66,6 +68,8 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
             this.log.info('Restoring accessory')
 
           } else {
+            this.log.info("Creating new accessory")
+            
             let accessory = new this.api.platformAccessory(apcDevices[i].product_name, uuid)
             let apcAccessory = new APCHomeAccessory(this, accessory, this.config, this.log, apcDevices[i])
             this.log.info('Created new accessory with name', apcDevices[i].product_name)

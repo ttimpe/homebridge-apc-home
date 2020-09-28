@@ -61,7 +61,8 @@ export default class APCService {
 					devices.push(device)
 				}
 			}
-		} catch {
+		} catch(error) {
+			console.log('[APCHome] error while fetching devices', error)
 			return devices
 		}
 		return devices
@@ -90,7 +91,8 @@ export default class APCService {
 					}
 				}
 			}
-		} catch {
+		} catch(error) {
+			console.log('[APCHome] error while getting device properties', error)
 			return outlets
 		}
 		return outlets
