@@ -17,6 +17,7 @@ import {
 
 import APCHomeAccessory from './APCHomeAccessory'
 import APCService from './APCService'
+import APCDevice from './APCDevice'
 
 const PLUGIN_NAME = "homebridge-apc-home"
 const PLATFORM_NAME = "APCHome"
@@ -28,6 +29,10 @@ let Accessory: typeof PlatformAccessory
 export default class APCHomePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service = this.api.hap.Service;
   public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
+
+  public apcService: APCService
+
+  public accessories: PlatformAccessory[] = []
 
   constructor(
     public readonly log: Logging,
@@ -43,8 +48,16 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
 
   }
 
-  didFinishLaunching() {
+  async didFinishLaunching() {
+    this.apcService = new APCService()
+    if (this.config.email && this.config.password) {
+      let email = this.config.email.toString()
+      let password = this.config.password.toString()
+       await this.apcService.loginUser(email, password)
+       let apcDevices: APCDevice[] = await this.apcService.getDevices()
+      // Now make platform accessories out of those devices, check if they already exist, etc.
 
+    }
   }
 
   configureAccessory(accessory: PlatformAccessory) {
