@@ -15,7 +15,6 @@ import {
 } from "homebridge";
 
 import APCHomePlatform from './APCHomePlatform'
-import APCOutlet from './APCOutlet'
 
 export default class APCHomeAccessory {
 	private Service: any
@@ -25,17 +24,14 @@ export default class APCHomeAccessory {
 
 	private enabledServices: Service[] = []
 	private name: string = 'APC Smart Plug'
-	private deviceId: string = ''
 
-	private outlets: APCOutlet[] = []
- 
 	constructor(
 		private readonly platform: APCHomePlatform,
 		private readonly accessory: PlatformAccessory,
 		private readonly config: any,
-		private readonly log: Logging
+		private readonly log: Logging,
 		private readonly deviceId: string
-		)
+		) {
 		this.platform = platform;
 		this.log = platform.log;
 
@@ -45,6 +41,8 @@ export default class APCHomeAccessory {
 
 		this.Characteristic = this.platform.api.hap.Characteristic
 
+
+	}
 
 
 }

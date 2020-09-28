@@ -1,6 +1,6 @@
 {
   "name": "homebridge-apc-home",
-  "version": "0.1",
+  "version": "0.0.1",
   "description": "Homebridge plugin for APC Home",
   "main": "lib/index.js",
   "scripts": {
@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/ttimpe/homebridge-apc-home/issues"
   },
-  "homepage": "https://github.com/ttimpe/homebridge-apc-home"
+  "homepage": "https://github.com/ttimpe/homebridge-apc-home",
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
 }

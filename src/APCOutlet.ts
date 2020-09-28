@@ -1,4 +1,5 @@
 export default class APCOutlet {
-	private name: string = ''
-	private isOn: boolean = false
+	public id: number
+	public name: string = ''
+	public isOn: boolean = false
 }
