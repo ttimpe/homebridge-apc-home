@@ -46,7 +46,7 @@ export default class APCService {
 
 	async getDevices() {
 		let devices: APCDevice[] = []
-		const url = 'https://ads-field.aylantworks.com/apiv1/devices.json'
+		const url = 'https://ads-field.aylanetworks.com/apiv1/devices.json'
 		try {
 			const res = await this.client.get(url, {
 				headers: {
@@ -73,7 +73,7 @@ export default class APCService {
 
 	async getDeviceProperties(device: APCDevice){
 		let outlets: APCOutlet[] = []
-		const url = 'https://ads-field.aylantworks.com/apiv1/dsns/' + device.dsn + '/properties.json'
+		const url = 'https://ads-field.aylanetworks.com/apiv1/dsns/' + device.dsn + '/properties.json'
 		try {
 			const res = await this.client.get(url, {
 				headers: {
