@@ -38,7 +38,8 @@ export default class APCService {
 			} else {
 				return false
 			}
-		} catch {
+		} catch (error) {
+			console.log('[APCHome] could not login user', error)
 			return false
 		}
 
