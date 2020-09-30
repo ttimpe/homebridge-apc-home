@@ -33,6 +33,8 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
   public apcService: APCService
 
   public accessories: PlatformAccessory[] = []
+  public apcAccessories: APCHomeAccessory[] = []
+  public apcDevices: APCDevice[] = []
 
   constructor(
     public readonly log: Logging,
@@ -66,6 +68,8 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
 
           if (existingAccessory) {
             this.log.info('Restoring accessory')
+            let apcAccessory = new APCHomeAccessory(this, existingAccessory, this.config, this.log, apcDevices[i], this.apcService)
+            this.apcAccessories.push(apcAccessory)
 
           } else {
             this.log.info("Creating new accessory")
@@ -74,6 +78,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
             let apcAccessory = new APCHomeAccessory(this, accessory, this.config, this.log, apcDevices[i], this.apcService)
             this.log.info('Created new accessory with name', apcDevices[i].product_name)
             this.api.registerPlatformAccessories(PLUGIN_NAME,PLATFORM_NAME,[accessory])
+            this.apcAccessories.push(apcAccessory)
           }
 
         }
@@ -83,5 +88,16 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
   configureAccessory(accessory: PlatformAccessory) {
 
   }
-
+  async updateValues() {
+    for (var dev=0; dev<this.apcDevices.length; dev++) {
+      let updatedOutlets = await this.apcService.getDeviceProperties(this.apcDevices[dev])
+      for (var i=0; i<this.apcDevices[dev].outlets.length; i++) {
+        for (var j=0; j<updatedOutlets.length; j++) {
+          if (this.apcDevices[dev].outlets[i].id == updatedOutlets[j].id) {
+            this.apcDevices[dev].outlets[i].isOn = updatedOutlets[j].isOn
+          }
+        }
+      }
+    }
+  }
 }

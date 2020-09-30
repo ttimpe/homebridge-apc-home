@@ -100,6 +100,8 @@ export default class APCService {
 		return outlets
 	}
 
+	
+
 	async setPowerState(outlet: APCOutlet, powerState: boolean) {
 
 		const url = 'https://ads-field.aylanetworks.com/apiv1/properties/' + outlet.id + '/datapoints.json'

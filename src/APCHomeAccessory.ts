@@ -59,13 +59,12 @@ export default class APCHomeAccessory {
 			let service = this.accessory.addService(this.platform.Service.Outlet, this.device.outlets[i].name, this.device.outlets[i].name)
 			let outletDelegate = new APCOutletDelegate(this.log, this.device.outlets[i], this.apcService, service)
 
-
-
 			this.enabledServices.push(service)
-		}
-		
+
+			}
+	}
+	getServices() {
+		return this.enabledServices
 	}
 
-
-  
 }
