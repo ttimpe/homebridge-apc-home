@@ -71,7 +71,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
             this.log.info("Creating new accessory")
             
             let accessory = new this.api.platformAccessory(apcDevices[i].product_name, uuid)
-            let apcAccessory = new APCHomeAccessory(this, accessory, this.config, this.log, apcDevices[i])
+            let apcAccessory = new APCHomeAccessory(this, accessory, this.config, this.log, apcDevices[i], this.apcService)
             this.log.info('Created new accessory with name', apcDevices[i].product_name)
             this.api.registerPlatformAccessories(PLUGIN_NAME,PLATFORM_NAME,[accessory])
           }
