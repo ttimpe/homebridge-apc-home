@@ -82,7 +82,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
           }
 
         }
-       setInterval(this.updateValues, 5000)
+       setInterval(this.updateValues, 10000)
     }
 
   }
@@ -92,7 +92,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
     // add the restored accessory to the accessories cache so we can track if it has already been registered
     this.accessories.push(accessory);
   }
-  
+
   async updateValues() {
     this.log.info("Called updateValues")
     for (var dev=0; dev<this.apcDevices.length; dev++) {
