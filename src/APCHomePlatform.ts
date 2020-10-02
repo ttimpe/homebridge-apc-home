@@ -63,9 +63,9 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
 
         for (var i=0; i<apcDevices.length; i++) {
           const uuid = this.api.hap.uuid.generate('homebridge-apc-home' + apcDevices[i].dsn)
-
+          this.log.info("Existing accessories", this.accessories)
           const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid)
-
+          this.log.info("existingAccessory value", existingAccessory)
           if (existingAccessory) {
             this.log.info('Restoring accessory')
             let apcAccessory = new APCHomeAccessory(this, existingAccessory, this.config, this.log, apcDevices[i], this.apcService)
