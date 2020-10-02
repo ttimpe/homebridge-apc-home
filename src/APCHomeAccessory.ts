@@ -57,7 +57,7 @@ export default class APCHomeAccessory {
 		for (let i=0; i < this.device.outlets.length; i++) {
 			const uuid = this.platform.api.hap.uuid.generate('homebridge-apc-home-' + this.device.outlets[i].id)
 			var service = this.accessory.getService(this.device.outlets[i].name) || this.accessory.addService(this.platform.Service.Outlet, this.device.outlets[i].name, this.device.outlets[i].name)
-			let outletDelegate = new APCOutletDelegate(this.log, this.device.outlets[i], this.apcService, service)
+			let outletDelegate = new APCOutletDelegate(this.platform, this.log, this.device.outlets[i], this.apcService, service)
 
 			this.enabledServices.push(service)
 

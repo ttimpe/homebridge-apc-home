@@ -17,19 +17,30 @@ import {
 import APCOutlet from './APCOutlet'
 import APCService from './APCService'
 
+import APCHomePlatform from './APCHomePlatform'
+
 export default class APCOutletDelegate {
 
 	private Service: any
 	private Characteristic: any
 
 
-	constructor(private readonly log: Logging, private readonly outlet: APCOutlet, private readonly apcService: APCService, private readonly service: Service) {
+	constructor(
+    private readonly platform: APCHomePlatform,
+    private readonly log: Logging,
+    private readonly outlet: APCOutlet,
+    private readonly apcService: APCService,
+    private readonly service: Service) {
 		
 
 		this.log = log
 		this.outlet = outlet
 		this.apcService = apcService
 		this.service = service
+
+    this.Service = this.platform.api.hap.Service
+
+    this.Characteristic = this.platform.api.hap.Characteristic
 
 
    		service.getCharacteristic(this.Characteristic.On)
