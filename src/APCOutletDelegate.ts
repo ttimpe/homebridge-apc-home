@@ -53,7 +53,7 @@ export default class APCOutletDelegate {
    * Handle requests to get the current value of the "On" characteristic
    */
   handleOnGet(callback: CharacteristicGetCallback) {
-    this.log.debug('Triggered GET On');
+    this.log.info('Triggered GET On');
 
     // set this to a valid value for On
     
@@ -64,7 +64,7 @@ export default class APCOutletDelegate {
    * Handle requests to set the "On" characteristic
    */
   handleOnSet(value: any, callback: any) {
-    this.log.debug('Triggered SET On:', value);
+    this.log.info('Triggered SET On:', value);
 
     callback(null);
     const boolValue :boolean = !!value
@@ -75,7 +75,7 @@ export default class APCOutletDelegate {
    * Handle requests to get the current value of the "Outlet In Use" characteristic
    */
   handleOutletInUseGet(callback: CharacteristicGetCallback) {
-    this.log.debug('Triggered GET OutletInUse');
+    this.log.info('Triggered GET OutletInUse');
 
     // set this to a valid value for OutletInUse
 

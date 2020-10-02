@@ -82,13 +82,16 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
           }
 
         }
+       setInterval(this.updateValues, 5000)
     }
+
   }
 
   configureAccessory(accessory: PlatformAccessory) {
 
   }
   async updateValues() {
+    this.log.info("Called updateValues")
     for (var dev=0; dev<this.apcDevices.length; dev++) {
       let updatedOutlets = await this.apcService.getDeviceProperties(this.apcDevices[dev])
       for (var i=0; i<this.apcDevices[dev].outlets.length; i++) {
