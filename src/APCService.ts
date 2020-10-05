@@ -123,7 +123,8 @@ export default class APCService {
 				return true
 			}
 		}
-		catch {
+		catch(error) {
+			console.log('[APCHome] Could not set power state', error)
 			return false
 		}
 		return false
