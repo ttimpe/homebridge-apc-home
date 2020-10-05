@@ -91,7 +91,9 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
         }
 
       }
-      setInterval(this.updateValues, 10000)
+      setInterval(() => {
+        this.updateValues()
+      }, 10000)
     }
 
   }
