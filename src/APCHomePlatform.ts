@@ -32,7 +32,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
 
   public apcService: APCService
 
-  public accessories: PlatformAccessory[] = []
+  public readonly accessories: PlatformAccessory[] = []
   public apcAccessories: APCHomeAccessory[] = []
   public apcDevices: APCDevice[] = []
 
@@ -50,6 +50,13 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
 
   }
 
+  configureAccessory(accessory: PlatformAccessory) {
+    this.log.info('Loading accessory from cache:', accessory.displayName);
+    // add the restored accessory to the accessories cache so we can track if it has already been registered
+    this.accessories.push(accessory);
+  }
+
+
   async didFinishLaunching() {
     this.log.info("APCHome initialized")
     this.apcService = new APCService()
@@ -62,7 +69,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
       // Now make platform accessories out of those devices, check if they already exist, etc.
 
         for (var i=0; i<apcDevices.length; i++) {
-          const uuid = this.api.hap.uuid.generate('homebridge-apc-home' + apcDevices[i].dsn)
+          const uuid = this.api.hap.uuid.generate('homebridge-apc-home-' + apcDevices[i].dsn)
           this.log.info("Existing accessories", this.accessories)
           const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid)
           this.log.info("existingAccessory value", existingAccessory)
@@ -70,6 +77,8 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
             this.log.info('Restoring accessory')
             let apcAccessory = new APCHomeAccessory(this, existingAccessory, this.config, this.log, apcDevices[i], this.apcService)
             this.apcAccessories.push(apcAccessory)
+
+            this.api.updatePlatformAccessories([existingAccessory])
 
           } else {
             this.log.info("Creating new accessory")
@@ -87,11 +96,6 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
 
   }
 
-  configureAccessory(accessory: PlatformAccessory) {
-    this.log.info('Loading accessory from cache:', accessory.displayName);
-    // add the restored accessory to the accessories cache so we can track if it has already been registered
-    this.accessories.push(accessory);
-  }
 
   async updateValues() {
     this.log.info("Called updateValues")
