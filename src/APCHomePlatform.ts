@@ -111,7 +111,7 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
       }
     }
   } catch (error) {
-    console.log('Error while updateValues')
+    console.log('Error while updateValues', error)
   }
   }
 }
