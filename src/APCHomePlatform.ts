@@ -64,55 +64,55 @@ export default class APCHomePlatform implements DynamicPlatformPlugin {
       let email = this.config.email.toString()
       let password = this.config.password.toString()
       this.log.info("Logging in user")
-       await this.apcService.loginUser(email, password)
-       let apcDevices: APCDevice[] = await this.apcService.getDevices()
+      await this.apcService.loginUser(email, password)
+      this.apcDevices = await this.apcService.getDevices()
       // Now make platform accessories out of those devices, check if they already exist, etc.
 
-        for (var i=0; i<apcDevices.length; i++) {
-          const uuid = this.api.hap.uuid.generate('homebridge-apc-home-' + apcDevices[i].dsn)
-          this.log.info("Existing accessories", this.accessories)
-          const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid)
-          this.log.info("existingAccessory value", existingAccessory)
-          if (existingAccessory) {
-            this.log.info('Restoring accessory')
-            let apcAccessory = new APCHomeAccessory(this, existingAccessory, this.config, this.log, apcDevices[i], this.apcService)
-            this.apcAccessories.push(apcAccessory)
+      for (var i=0; i<this.apcDevices.length; i++) {
+        const uuid = this.api.hap.uuid.generate('homebridge-apc-home-' + this.apcDevices[i].dsn)
+        this.log.info("Existing accessories", this.accessories)
+        const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid)
+        this.log.info("existingAccessory value", existingAccessory)
+        if (existingAccessory) {
+          this.log.info('Restoring accessory')
+          let apcAccessory = new APCHomeAccessory(this, existingAccessory, this.config, this.log, this.apcDevices[i], this.apcService)
+          this.apcAccessories.push(apcAccessory)
 
-            this.api.updatePlatformAccessories([existingAccessory])
+          this.api.updatePlatformAccessories([existingAccessory])
 
-          } else {
-            this.log.info("Creating new accessory")
-            
-            let accessory = new this.api.platformAccessory(apcDevices[i].product_name, uuid)
-            let apcAccessory = new APCHomeAccessory(this, accessory, this.config, this.log, apcDevices[i], this.apcService)
-            this.log.info('Created new accessory with name', apcDevices[i].product_name)
-            this.api.registerPlatformAccessories(PLUGIN_NAME,PLATFORM_NAME,[accessory])
-            this.apcAccessories.push(apcAccessory)
-          }
+        } else {
+          this.log.info("Creating new accessory")
 
+          let accessory = new this.api.platformAccessory(this.apcDevices[i].product_name, uuid)
+          let apcAccessory = new APCHomeAccessory(this, accessory, this.config, this.log, this.apcDevices[i], this.apcService)
+          this.log.info('Created new accessory with name', this.apcDevices[i].product_name)
+          this.api.registerPlatformAccessories(PLUGIN_NAME,PLATFORM_NAME,[accessory])
+          this.apcAccessories.push(apcAccessory)
         }
-       setInterval(this.updateValues, 10000)
+
+      }
+      setInterval(this.updateValues, 10000)
     }
 
   }
 
 
   async updateValues() {
-    console.log("Called updateValues")
+    console.log("Called updateValues", this.apcDevices)
     try {
-    for (var dev=0; dev<this.apcDevices.length; dev++) {
-      let updatedOutlets = await this.apcService.getDeviceProperties(this.apcDevices[dev])
-      console.log('updated outlets', updatedOutlets)
-      for (var i=0; i<this.apcDevices[dev].outlets.length; i++) {
-        for (var j=0; j<updatedOutlets.length; j++) {
-          if (this.apcDevices[dev].outlets[i].id == updatedOutlets[j].id) {
-            this.apcDevices[dev].outlets[i].isOn = updatedOutlets[j].isOn
+      for (var dev=0; dev<this.apcDevices.length; dev++) {
+        let updatedOutlets = await this.apcService.getDeviceProperties(this.apcDevices[dev])
+        console.log('updated outlets', updatedOutlets)
+        for (var i=0; i<this.apcDevices[dev].outlets.length; i++) {
+          for (var j=0; j<updatedOutlets.length; j++) {
+            if (this.apcDevices[dev].outlets[i].id == updatedOutlets[j].id) {
+              this.apcDevices[dev].outlets[i].isOn = updatedOutlets[j].isOn
+            }
           }
         }
       }
+    } catch (error) {
+      console.log('Error while updateValues', error)
     }
-  } catch (error) {
-    console.log('Error while updateValues', error)
-  }
   }
 }
